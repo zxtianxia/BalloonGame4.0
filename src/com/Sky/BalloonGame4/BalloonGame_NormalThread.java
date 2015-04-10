@@ -7,8 +7,6 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.os.SystemClock;
 import android.view.SurfaceHolder;
-import com.lidroid.xutils.ViewUtils;
-import com.lidroid.xutils.view.annotation.ViewInject;
 
 /**
  * Created by Sky
@@ -21,8 +19,6 @@ public class BalloonGame_NormalThread extends Thread {
     SurfaceHolder surfaceHolder;
     Context context;
     private Bitmap bitmap_black, bitmap_blue, bitmap_gray, bitmap_green, bitmap_lightblue, bitmap_orange, bitmap_pink;
-
-
     /**
      * @param surfaceHolder
      * @param context
@@ -34,14 +30,12 @@ public class BalloonGame_NormalThread extends Thread {
         initBalloonBitmap();
         this.type = type;
     }
-
-
     /**
      * surfaceView后台绘画线程
      */
     @Override
     public void run() {
-
+        //根据游戏的类型不同，采用不同的画法
         judgeCanvas();
         while (running) {
             //获取画布
@@ -49,23 +43,19 @@ public class BalloonGame_NormalThread extends Thread {
             canvas.drawColor(Color.WHITE);
             //调用画法
             drawcanvs.drawCavs();
-
             //将画出内容推送到surfaceview中
             surfaceHolder.unlockCanvasAndPost(canvas);
             //设置图像推送间隔时间
             SystemClock.sleep(100);
-
         }
     }
-
-
-
     /**
      * 退出图像绘制的后台进程
      */
     public void exit() {
         running = false;
     }
+/******************************以下为私有方法***********************************************/
 
     /**
      * 初始化所有的气球图像
